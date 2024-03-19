@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real-time Fraud Detection System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      color: #333;
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .page {
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      flex: 1;
+      margin-bottom: 20px;
+      padding: 20px;
+    }
+    .page h2 {
+      color: #333;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 0 0 10px;
+    }
+    .page form {
+      margin-top: 20px;
+    }
+    .page textarea,
+    .page input[type="text"] {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      display: block;
+      font-size: 1rem;
+      padding: 10px;
+      width: 100%;
+    }
+    .page button[type="submit"] {
+      background-color: #333;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 1rem;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .page button[type="submit"]:hover {
+      background-color: #444;
+    }
+    .page #sms-result {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<h1><br>Real-time Fraud Detection System</h1>
+
+<div id="content">
+  <div class="page" id="sms-fraud">
+    <h2>SMS Fraud</h2>
+    <form id="sms-form">
+      <textarea id="sms-input" rows="4" cols="50"></textarea><br>
+      <button type="submit">Submit</button>
+    </form>
+    <div id="sms-result"></div>
+  </div>
+</div>
+
+<script>
+  const smsForm = document.getElementById("sms-form");
+  const smsInput = document.getElementById("sms-input");
+  const smsResult = document.getElementById("sms-result");
+
+  smsForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const text = smsInput.value;
+    
+    // Sending AJAX request to Flask server for prediction
+    fetch('/predict', {
+      method: 'POST',
+      body: new URLSearchParams({ text: text }),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Displaying result in smsResult
+      smsResult.innerHTML = data.result;
+    })
+    .catch(error => console.error('Error:', error));
+  });
+</script>
+</body>
+</html>
