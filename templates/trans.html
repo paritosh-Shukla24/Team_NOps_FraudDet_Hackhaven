@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Fraud Prediction</title>
+</head>
+<body>
+    <h1>Transaction Fraud Prediction</h1>
+    <form action="/predict" method="post">
+        <label for="type">Transaction Type (1=CASH_OUT, 2=PAYMENT, 3=CASH_IN, 4=TRANSFER, 5=DEBIT):</label><br>
+        <input type="number" id="type" name="type"><br>
+        <label for="amount">Amount:</label><br>
+        <input type="number" id="amount" name="amount"><br>
+        <label for="oldbalanceOrg">Old Balance Origin:</label><br>
+        <input type="number" id="oldbalanceOrg" name="oldbalanceOrg"><br>
+        <label for="newbalanceOrig">New Balance Origin:</label><br>
+        <input type="number" id="newbalanceOrig" name="newbalanceOrig"><br>
+        <label for="oldbalanceDest">Old Balance Destination:</label><br>
+        <input type="number" id="oldbalanceDest" name="oldbalanceDest"><br>
+        <label for="newbalanceDest">New Balance Destination:</label><br>
+        <input type="number" id="newbalanceDest" name="newbalanceDest"><br><br>
+        <button type="submit">Predict Fraud</button>
+    </form>
+    {% if prediction_text %}
+        <h2>{{ prediction_text }}</h2>
+    {% endif %}
+</body>
+</html>

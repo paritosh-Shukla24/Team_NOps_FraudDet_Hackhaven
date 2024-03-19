@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real-time Fraud Detection System</title>
+  <style>
+    /* Your CSS styles remain unchanged */
+  </style>
+</head>
+<body>
+<nav id="navbar">
+  <ul>
+    <li><a href="#sms-fraud">SMS Fraud</a></li>
+    <li><a href="#fraud-transactions">Fraud Transactions</a></li>
+    <li><a href="#phishing">Phishing</a></li>
+    <li><a href="#rl">RL</a></li>
+  </ul>
+</nav>
+
+<h1><br>Real-time Fraud Detection System</h1>
+
+<div id="content">
+ 
+  <div class="page" id="phishing">
+    <h2>Phishing</h2>
+    <form id="phishing-form">
+      <input type="text" id="phishing-input" placeholder="URL"><br>
+      <button type="submit">Submit</button>
+    </form>
+    <div id="phishing-result"></div> <!-- Added div to display result -->
+  </div>
+ 
+</div>
+
+<script>
+  const phishingForm = document.getElementById("phishing-form");
+  const phishingInput = document.getElementById("phishing-input");
+  const phishingResult = document.getElementById("phishing-result");
+
+  phishingForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const url = phishingInput.value;
+    // Call your phishing detection API here
+    fetch('/predict', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ url: url })
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Display prediction result
+      phishingResult.innerHTML = `<p>Prediction: ${data.label} (Probability: ${data.probability})</p>`;
+    })
+    .catch(error => console.error('Error:', error));
+  });
+
+  // Load transactions from your backend API here
+  // and display them in the transaction-table
+
+  function scrollToSection(id) {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+</script>
+</body>
+</html>
